@@ -7,15 +7,9 @@ __turbopack_context__.v((parentImport) => {
     });
 });
 }),
-"[project]/frontend/node_modules/.pnpm/@mediapipe+tasks-vision@0.10.17/node_modules/@mediapipe/tasks-vision/vision_bundle.mjs [app-client] (ecmascript, async loader)", ((__turbopack_context__) => {
+"[project]/frontend/node_modules/.pnpm/@mediapipe+tasks-vision@0.10.17/node_modules/@mediapipe/tasks-vision/vision_bundle.mjs [app-client] (ecmascript, async loader)", (() => {{
 
-__turbopack_context__.v((parentImport) => {
-    return Promise.all([
-  "static/chunks/3bf2d_@mediapipe_tasks-vision_vision_bundle_mjs_4824a770._.js",
-  "static/chunks/3bf2d_@mediapipe_tasks-vision_vision_bundle_mjs_5006b6b2._.js"
-].map((chunk) => __turbopack_context__.l(chunk))).then(() => {
-        return parentImport("[project]/frontend/node_modules/.pnpm/@mediapipe+tasks-vision@0.10.17/node_modules/@mediapipe/tasks-vision/vision_bundle.mjs [app-client] (ecmascript)");
-    });
-});
-}),
+throw new Error("An error occurred while generating the chunk item [project]/frontend/node_modules/.pnpm/@mediapipe+tasks-vision@0.10.17/node_modules/@mediapipe/tasks-vision/vision_bundle.mjs [app-client] (ecmascript, async loader)\n\nCaused by:\n- Cell CellId { type_id: ValueTypeId { id: 295, name: ValueType { name: \"turbopack_core::chunk::available_modules::AvailableModulesSet\", dbg: \"(trait fn)\", dbg_depth: \"(trait fn)\" } }, index: 0 } no longer exists in task <BrowserChunkingContext as ChunkingContext>::chunk_group (no cell of this type exists)\n\nDebug info:\n- An error occurred while generating the chunk item [project]/frontend/node_modules/.pnpm/@mediapipe+tasks-vision@0.10.17/node_modules/@mediapipe/tasks-vision/vision_bundle.mjs [app-client] (ecmascript, async loader)\n- Execution of <AsyncLoaderChunkItem as EcmascriptChunkItem>::content failed\n- Execution of AsyncLoaderChunkItem::chunks_data failed\n- Execution of AsyncLoaderChunkItem::chunk_group failed\n- Execution of AvailableModules::get failed\n- Cell CellId { type_id: ValueTypeId { id: 295, name: ValueType { name: \"turbopack_core::chunk::available_modules::AvailableModulesSet\", dbg: \"(trait fn)\", dbg_depth: \"(trait fn)\" } }, index: 0 } no longer exists in task <BrowserChunkingContext as ChunkingContext>::chunk_group (no cell of this type exists)");
+
+}}),
 ]);

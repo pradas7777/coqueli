@@ -25,7 +25,7 @@ export default function SignatureMarqueeSection() {
             {[...Array(4)].map((_, i) => (
               <h2
                 key={i}
-                className="font-[family-name:var(--font-brier)] text-[12vw] md:text-[8vw] text-[#D1FF1C] leading-[0.9] tracking-tight px-4"
+                className="font-[family-name:var(--font-brier)] text-[12vw] md:text-[8vw] text-lorenzo-light leading-[0.9] tracking-tight px-4"
               >
                 COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER 
               </h2>
@@ -53,7 +53,7 @@ export default function SignatureMarqueeSection() {
                 key={i}
                 className="font-[family-name:var(--font-oswald)] font-bold uppercase text-[12vw] md:text-[8vw] text-white leading-[0.9] tracking-tighter px-4"
               >
-                FIGHTING FOR VICTORIES FIGHTING FOR VICTORIES FIGHTING FOR VICTORIES FIGHTING FOR VICTORIES
+                FLORAL DESIGN FLOWER CLASS WEDDING FLOWER FLORIST
               </h2>
             ))}
           </motion.div>

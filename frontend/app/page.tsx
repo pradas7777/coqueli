@@ -16,13 +16,34 @@ import { HistoricalResultsAccordion } from "@/components/historical-results-acco
 export default function Home() {
   return (
     <main className="relative">
-      <Header />
-      <HeroSection />
-      <div className="relative z-10">
-        <MissionSection />
+      <div className="relative z-50">
+        <Header />
+      </div>
+      <div className="relative">
+
+        {/* 1. 배경 이미지 설정 */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/mission-bg.png"
+            alt="Hero and Mission Background"
+            fill 
+            className="object-cover object-top"
+            priority 
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+        <div className="relative z-10">
+          <HeroSection />
+          <div>
+            <MissionSection />
+          </div>
+        </div>
+
+      </div>
+      <div>
         <MasonryGallerySection />
         {/* <TrackSplitSection /> */}
-        <RiderTechSection />
+        {/* <RiderTechSection />
         <div className="relative w-full h-[120px] md:h-[160px] lg:h-[200px] overflow-hidden bg-white">
           <Image
             src="/images/trilha2.svg"
@@ -57,7 +78,7 @@ export default function Home() {
         <InteractiveSchedule />
         <HistoricalResultsAccordion />
 
-        <SocialSection />
+        <SocialSection /> */}
         <Footer />
       </div>
     </main>

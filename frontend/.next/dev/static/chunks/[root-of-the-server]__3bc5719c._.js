@@ -339,6 +339,12 @@ var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
+const hexToGLSLVec3 = (hex)=>{
+    const r = parseInt(hex.slice(1, 3), 16) / 255;
+    const g = parseInt(hex.slice(3, 5), 16) / 255;
+    const b = parseInt(hex.slice(5, 7), 16) / 255;
+    return `vec3(${r.toFixed(3)}, ${g.toFixed(3)}, ${b.toFixed(3)})`;
+};
 function InteractivePortrait() {
     _s();
     const containerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -526,7 +532,7 @@ function InteractivePortrait() {
         uniform sampler2D texBlob; 
         uniform float time; 
         varying vec4 vPosProj;
-
+        
         // Função de ruído simples
         float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}
         float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(3.-2.*f);float a=hash(i);float b=hash(i+vec2(1.,0.));float c=hash(i+vec2(0.,1.));float d=hash(i+vec2(1.,1.));return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}
@@ -546,38 +552,38 @@ function InteractivePortrait() {
         ${shader.fragmentShader}
       `.replace(`#include <clipping_planes_fragment>`, `
         // A lógica da máscara continua a mesma
-        vec2 blobUV=((vPosProj.xy/vPosProj.w)+1.)*0.5;
-        vec4 blobData=texture(texBlob,blobUV);
-        if(blobData.r<0.02)discard;
+        vec2 blobUV = ((vPosProj.xy / vPosProj.w) + 1.0) * 0.5;
+        vec4 blobData = texture(texBlob, blobUV);
+        if(blobData.r < 0.02) discard;
 
         // <<< LÓGICA ATUALIZADA PARA ANIMAÇÃO LÍQUIDA (DOMAIN WARPING) >>>
 
         // 1. Define as cores
-        vec3 colorBg = vec3(1.0);
-        vec3 colorSoftShape = vec3(0.92);
-        vec3 colorLine = vec3(0.8);
+        vec3 colorBg = ${hexToGLSLVec3("#ffc0c0")};
+        vec3 colorSoftShape = ${hexToGLSLVec3("#fc9696")};
+        vec3 colorLine = ${hexToGLSLVec3("#ffa6a6")};
 
         // 2. Coordenada base da textura (controla o "zoom")
         vec2 uv = vUv * 3.5;
 
         // 3. Cria um "campo de distorção" que muda com o tempo
         // Este é o nosso "líquido invisível" que vai mover a textura
-        vec2 distortionField = vUv * 2.0;
-        float distortion = fbm(distortionField + time * 0.2); // O campo de distorção se move lentamente
+        vec2 distortionField = vUv * 1.5;
+        float distortion = fbm(distortionField + time * 0.1); // O campo de distorção se move lentamente
 
         // 4. Aplica a distorção (warp) às coordenadas da textura principal
         // Usamos o 'distortion' para empurrar as coordenadas 'uv'
-        float distortionStrength = 0.7; // <-- CONTROLE A INTENSIDADE AQUI
-        vec2 warpedUv = uv + (distortion - 0.5) * distortionStrength;
+          float distortionStrength = 0.5;
+          vec2 warpedUv = uv + (distortion - 0.5) * distortionStrength;
         
         // 5. Gera o valor final do ruído a partir das coordenadas distorcidas
         float n = fbm(warpedUv);
 
         // O resto da lógica para desenhar as formas e linhas permanece o mesmo
-        float softShapeMix = smoothstep(0.1, 0.9, sin(n * 3.0));
+        float softShapeMix = smoothstep(0.4, 0.8, sin(n * 4.5));
         vec3 baseColor = mix(colorBg, colorSoftShape, softShapeMix);
-        float linePattern = fract(n * 15.0);
-        float lineMix = 1.0 - smoothstep(0.49, 0.51, linePattern);
+        float linePattern = fract(n * 5.0);
+        float lineMix = 1.0 - smoothstep(0.89, 0.71, linePattern);
         vec3 finalColor = mix(baseColor, colorLine, lineMix);
 
         diffuseColor.rgb = finalColor;
@@ -712,12 +718,12 @@ function InteractivePortrait() {
             }
         }, void 0, false, {
             fileName: "[project]/frontend/components/interactive-portrait.tsx",
-            lineNumber: 365,
+            lineNumber: 372,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/frontend/components/interactive-portrait.tsx",
-        lineNumber: 360,
+        lineNumber: 367,
         columnNumber: 5
     }, this);
 }
@@ -770,7 +776,7 @@ function SignatureMarqueeSection() {
                         children: [
                             ...Array(4)
                         ].map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "font-[family-name:var(--font-brier)] text-[12vw] md:text-[8vw] text-[#D1FF1C] leading-[0.9] tracking-tight px-4",
+                                className: "font-[family-name:var(--font-brier)] text-[12vw] md:text-[8vw] text-lorenzo-light leading-[0.9] tracking-tight px-4",
                                 children: "COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER COQUELI FLOWER"
                             }, i, false, {
                                 fileName: "[project]/frontend/components/signature-marquee-section.tsx",
@@ -809,7 +815,7 @@ function SignatureMarqueeSection() {
                             ...Array(4)
                         ].map((_, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                 className: "font-[family-name:var(--font-oswald)] font-bold uppercase text-[12vw] md:text-[8vw] text-white leading-[0.9] tracking-tighter px-4",
-                                children: "FIGHTING FOR VICTORIES FIGHTING FOR VICTORIES FIGHTING FOR VICTORIES FIGHTING FOR VICTORIES"
+                                children: "FLORAL DESIGN FLOWER CLASS WEDDING FLOWER FLORIST"
                             }, i, false, {
                                 fileName: "[project]/frontend/components/signature-marquee-section.tsx",
                                 lineNumber: 52,
@@ -870,12 +876,12 @@ function HeroSection() {
     _s();
     const containerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const [isReady, setIsReady] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    // Wait for preloader (2.5s + buffer)
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "HeroSection.useEffect": ()=>{
             const timer = setTimeout({
                 "HeroSection.useEffect.timer": ()=>setIsReady(true)
-            }["HeroSection.useEffect.timer"], 2600);
+            }["HeroSection.useEffect.timer"], 1500);
+            // 프리로더 화면 기다리는 시간 1500
             return ({
                 "HeroSection.useEffect": ()=>clearTimeout(timer)
             })["HeroSection.useEffect"];
@@ -946,17 +952,17 @@ function HeroSection() {
                         },
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$signature$2d$marquee$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                             fileName: "[project]/frontend/components/hero-section.tsx",
-                            lineNumber: 57,
+                            lineNumber: 58,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/frontend/components/hero-section.tsx",
-                        lineNumber: 53,
+                        lineNumber: 54,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/frontend/components/hero-section.tsx",
-                    lineNumber: 46,
+                    lineNumber: 47,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$framer$2d$motion$40$11$2e$18$2e$2_$40$emot_73a4dec5f14e9c586ae4b6f53ad50a6d$2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -968,23 +974,23 @@ function HeroSection() {
                     },
                     children: isReady && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$components$2f$interactive$2d$portrait$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                         fileName: "[project]/frontend/components/hero-section.tsx",
-                        lineNumber: 70,
+                        lineNumber: 71,
                         columnNumber: 23
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/frontend/components/hero-section.tsx",
-                    lineNumber: 62,
+                    lineNumber: 63,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/frontend/components/hero-section.tsx",
-            lineNumber: 44,
+            lineNumber: 45,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/frontend/components/hero-section.tsx",
-        lineNumber: 43,
+        lineNumber: 44,
         columnNumber: 5
     }, this);
 }
@@ -1117,23 +1123,23 @@ function MissionSection() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "mission",
         ref: sectionRef,
-        className: "relative min-h-screen bg-lorenzo-dark text-lorenzo-text-light py-24 flex items-center justify-center",
+        className: "relative min-h-screen bg--background text-lorenzo-text-light py-24 flex items-center justify-center",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "max-w-7xl mx-auto px-6 md:px-12",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "relative h-32 flex items-center justify-center mt-16",
+                    className: "relative w-full flex items-center justify-center mt-16",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                        src: "/images/icon/ico-helmet-w.png",
-                        className: "h-full w-auto max-h-[60px] object-contain"
+                        src: "/images/icon/ico-coqueli.png",
+                        className: "h-full w-auto max-h-[400px] object-contain"
                     }, void 0, false, {
                         fileName: "[project]/frontend/components/mission-section.tsx",
-                        lineNumber: 80,
+                        lineNumber: 69,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/frontend/components/mission-section.tsx",
-                    lineNumber: 79,
+                    lineNumber: 68,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1141,77 +1147,106 @@ function MissionSection() {
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                         className: "text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-balance leading-[1.1] xl:text-8xl",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-lorenzo-accent font-brier leading-[1.1] text-8xl",
-                                children: "REDEFINING"
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                 fileName: "[project]/frontend/components/mission-section.tsx",
-                                lineNumber: 88,
+                                lineNumber: 78,
                                 columnNumber: 13
                             }, this),
-                            " LIMITS,",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-lorenzo-light font-brier text-10xl",
+                                children: "ACCESSIBILITY"
+                            }, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 79,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 80,
+                                columnNumber: 13
+                            }, this),
+                            "수원역 도보 5분 거리로",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 81,
+                                columnNumber: 13
+                            }, this),
+                            "KTX 및 지하철 접근성이 편리합니다",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 82,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 83,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-lorenzo-light font-brier f leading-[1.1]",
+                                children: "LECTURER"
+                            }, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 84,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 85,
+                                columnNumber: 13
+                            }, this),
+                            "모든 운영진 및 강사진은",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 86,
+                                columnNumber: 13
+                            }, this),
+                            "원예·웨딩 전공 및 석사 출신으로",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                fileName: "[project]/frontend/components/mission-section.tsx",
+                                lineNumber: 87,
+                                columnNumber: 13
+                            }, this),
+                            "차별화된 실력과 감각을 갖추고 있습니다",
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                 fileName: "[project]/frontend/components/mission-section.tsx",
                                 lineNumber: 89,
                                 columnNumber: 13
                             }, this),
-                            "FIGHTING FOR ",
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-lorenzo-accent font-brier leading-[1.1]",
-                                children: "VICTORIES"
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                 fileName: "[project]/frontend/components/mission-section.tsx",
                                 lineNumber: 90,
-                                columnNumber: 26
+                                columnNumber: 13
                             }, this),
-                            ",",
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-lorenzo-light font-brier leading-[1.1]",
+                                children: "CLASS"
+                            }, void 0, false, {
                                 fileName: "[project]/frontend/components/mission-section.tsx",
                                 lineNumber: 91,
                                 columnNumber: 13
                             }, this),
-                            "BRINGING EVERYTHING IN",
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                 fileName: "[project]/frontend/components/mission-section.tsx",
-                                lineNumber: 93,
+                                lineNumber: 92,
                                 columnNumber: 13
                             }, this),
-                            "EVERY SENSE.",
+                            "실무 중심의 수준 높은 강의와 트렌디한 커리큘럼을 제공하며,",
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                 fileName: "[project]/frontend/components/mission-section.tsx",
-                                lineNumber: 95,
+                                lineNumber: 94,
                                 columnNumber: 13
                             }, this),
-                            "DEFINING A ",
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-lorenzo-accent font-brier leading-[1.1]",
-                                children: "LEGACY"
-                            }, void 0, false, {
-                                fileName: "[project]/frontend/components/mission-section.tsx",
-                                lineNumber: 96,
-                                columnNumber: 24
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
-                                fileName: "[project]/frontend/components/mission-section.tsx",
-                                lineNumber: 97,
-                                columnNumber: 13
-                            }, this),
-                            "IN MOTOCROSS",
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
-                                fileName: "[project]/frontend/components/mission-section.tsx",
-                                lineNumber: 99,
-                                columnNumber: 13
-                            }, this),
-                            "ON AND OFF THE TRACK."
+                            "관련 분야 취업 연계까지 지원합니다"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/frontend/components/mission-section.tsx",
-                        lineNumber: 87,
+                        lineNumber: 77,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/frontend/components/mission-section.tsx",
-                    lineNumber: 86,
+                    lineNumber: 76,
                     columnNumber: 9
                 }, this)
             ]
@@ -3587,63 +3622,63 @@ var _s = __turbopack_context__.k.signature();
 ;
 const galleryImages = [
     {
-        src: "/images/lorenzo-piloto1.png",
-        alt: "Lorenzo racing action 1",
+        src: "/images/coqueli-po1.jpg",
+        alt: "flower",
         aspect: "aspect-[3/4]"
     },
     {
-        src: "/images/lorenzo-piloto2.png",
-        alt: "Lorenzo racing action 2",
+        src: "/images/coqueli-po2.jpg",
+        alt: "flower",
         aspect: "aspect-[4/3]"
     },
     {
-        src: "/images/lofan/lofan.jpg",
-        alt: "Lorenzo racing action 3",
+        src: "/images/coqueli-po3.jpg",
+        alt: "flower",
         aspect: "aspect-[3/4]"
     },
     {
-        src: "/images/lofan/lofan3.jpg",
-        alt: "Lorenzo racing action 4",
+        src: "/images/coqueli-po4.jpg",
+        alt: "flower",
         aspect: "aspect-[4/3]"
     },
     {
-        src: "/images/lorenzo-piloto7.png",
-        alt: "Lorenzo racing action 5",
+        src: "/images/coqueli-po5.jpg",
+        alt: "flower",
         aspect: "aspect-[3/4]"
     },
     {
-        src: "/images/lorenzo-piloto5.png",
-        alt: "Lorenzo racing action 6",
+        src: "/images/coqueli-po6.jpg",
+        alt: "flower",
         aspect: "aspect-[4/3]"
     },
     {
-        src: "/images/lorenzo-podio2.png",
-        alt: "Lorenzo podium 1",
+        src: "/images/coqueli-po7.jpg",
+        alt: "flower",
         aspect: "aspect-[3/4]"
     },
     {
-        src: "/images/lorenzo-podio3.png",
-        alt: "Lorenzo podium 2",
+        src: "/images/coqueli-po8.jpg",
+        alt: "flower",
         aspect: "aspect-[4/3]"
     },
     {
-        src: "/images/lorenzo-podio5.png",
-        alt: "Lorenzo podium 3",
+        src: "/images/coqueli-po9.jpg",
+        alt: "flower",
         aspect: "aspect-[3/4]"
     },
     {
-        src: "/images/lorenzo-box.png",
-        alt: "Motocross bike",
+        src: "/images/coqueli-po10.jpg",
+        alt: "flower",
         aspect: "aspect-[4/3]"
     },
     {
-        src: "/images/lorenzo-box3.png",
-        alt: "Showroom 1",
+        src: "/images/coqueli-po11.jpg",
+        alt: "flower",
         aspect: "aspect-[3/4]"
     },
     {
-        src: "/images/lorenzo-box2.png",
-        alt: "Showroom 2",
+        src: "/images/coqueli-po12.jpg",
+        alt: "flower",
         aspect: "aspect-[4/3]"
     }
 ];

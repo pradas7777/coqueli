@@ -9,9 +9,10 @@ export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isReady, setIsReady] = useState(false)
 
-  // Wait for preloader (2.5s + buffer)
+ 
   useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 2600)
+    const timer = setTimeout(() => setIsReady(true), 1500) 
+    // 프리로더 화면 기다리는 시간 1500
     return () => clearTimeout(timer)
   }, [])
 

@@ -2,17 +2,17 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
+/* 꼬끌리 #fadde0 */
 :root {
   --darkcinzabg: #111112;
   --lorenzo-dark: #282c20;
   --lorenzo-darkbk: #282c20;
-  --lorenzo-light: #e8e8e3;
-  --lorenzo-accent:rgba(65, 44, 48, 0.88);
+  --lorenzo-light: #ffb5b9;
+  --lorenzo-accent:rgba(255, 128, 134, 0.88);
   --lorenzo-text-dark: #000000;
   --lorenzo-text-light: #ffffff;
   --verdetitulo: #282c20;
-  --background: hsl(0 0% 100%);
+  --background: #000000;
   /* --background: hsl(0 0% 100%); */
   --foreground: hsl(15 18% 12%);
   --card: hsl(0 0% 100%);
@@ -103,7 +103,7 @@
   --sidebar-accent: oklch(0.8228 0.1095 346.0184);
   --sidebar-accent-foreground: oklch(0.2781 0.0296 256.8480);
   --sidebar-border: oklch(0.3729 0.0306 259.7328);
-  --sidebar-ring: oklch(0.6559 0.2118 354.3084);
+  --sidebar-ring: oklch(88.762% 0.06589 347.431);
   --shadow-x: 3px;
   --shadow-y: 3px;
   --shadow-blur: 0px;

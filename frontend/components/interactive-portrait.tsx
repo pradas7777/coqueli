@@ -5,6 +5,13 @@
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
 
+const hexToGLSLVec3 = (hex: string) => {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+  return `vec3(${r.toFixed(3)}, ${g.toFixed(3)}, ${b.toFixed(3)})`;
+};
+
 export default function InteractivePortrait() {
   const containerRef = useRef<HTMLDivElement>(null)
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
@@ -185,7 +192,7 @@ export default function InteractivePortrait() {
         uniform sampler2D texBlob; 
         uniform float time; 
         varying vec4 vPosProj;
-
+        
         // Função de ruído simples
         float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}
         float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(3.-2.*f);float a=hash(i);float b=hash(i+vec2(1.,0.));float c=hash(i+vec2(0.,1.));float d=hash(i+vec2(1.,1.));return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}
@@ -207,38 +214,38 @@ export default function InteractivePortrait() {
         `#include <clipping_planes_fragment>`,
         `
         // A lógica da máscara continua a mesma
-        vec2 blobUV=((vPosProj.xy/vPosProj.w)+1.)*0.5;
-        vec4 blobData=texture(texBlob,blobUV);
-        if(blobData.r<0.02)discard;
+        vec2 blobUV = ((vPosProj.xy / vPosProj.w) + 1.0) * 0.5;
+        vec4 blobData = texture(texBlob, blobUV);
+        if(blobData.r < 0.02) discard;
 
         // <<< LÓGICA ATUALIZADA PARA ANIMAÇÃO LÍQUIDA (DOMAIN WARPING) >>>
 
         // 1. Define as cores
-        vec3 colorBg = vec3(1.0);
-        vec3 colorSoftShape = vec3(0.92);
-        vec3 colorLine = vec3(0.8);
+        vec3 colorBg = ${hexToGLSLVec3("#ffc0c0")};
+        vec3 colorSoftShape = ${hexToGLSLVec3("#fc9696")};
+        vec3 colorLine = ${hexToGLSLVec3("#ffa6a6")};
 
         // 2. Coordenada base da textura (controla o "zoom")
         vec2 uv = vUv * 3.5;
 
         // 3. Cria um "campo de distorção" que muda com o tempo
         // Este é o nosso "líquido invisível" que vai mover a textura
-        vec2 distortionField = vUv * 2.0;
-        float distortion = fbm(distortionField + time * 0.2); // O campo de distorção se move lentamente
+        vec2 distortionField = vUv * 1.5;
+        float distortion = fbm(distortionField + time * 0.1); // O campo de distorção se move lentamente
 
         // 4. Aplica a distorção (warp) às coordenadas da textura principal
         // Usamos o 'distortion' para empurrar as coordenadas 'uv'
-        float distortionStrength = 0.7; // <-- CONTROLE A INTENSIDADE AQUI
-        vec2 warpedUv = uv + (distortion - 0.5) * distortionStrength;
+          float distortionStrength = 0.5;
+          vec2 warpedUv = uv + (distortion - 0.5) * distortionStrength;
         
         // 5. Gera o valor final do ruído a partir das coordenadas distorcidas
         float n = fbm(warpedUv);
 
         // O resto da lógica para desenhar as formas e linhas permanece o mesmo
-        float softShapeMix = smoothstep(0.1, 0.9, sin(n * 3.0));
+        float softShapeMix = smoothstep(0.4, 0.8, sin(n * 4.5));
         vec3 baseColor = mix(colorBg, colorSoftShape, softShapeMix);
-        float linePattern = fract(n * 15.0);
-        float lineMix = 1.0 - smoothstep(0.49, 0.51, linePattern);
+        float linePattern = fract(n * 5.0);
+        float lineMix = 1.0 - smoothstep(0.89, 0.71, linePattern);
         vec3 finalColor = mix(baseColor, colorLine, lineMix);
 
         diffuseColor.rgb = finalColor;

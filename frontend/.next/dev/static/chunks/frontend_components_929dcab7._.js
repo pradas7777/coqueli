@@ -78,7 +78,7 @@ function Preloader() {
                     setIsVisible(false);
                     document.body.style.overflow = "unset";
                 }
-            }["Preloader.useEffect.timer"], 2500);
+            }["Preloader.useEffect.timer"], 1700);
             return ({
                 "Preloader.useEffect": ()=>{
                     clearTimeout(timer);
@@ -94,13 +94,13 @@ function Preloader() {
             },
             exit: {
                 opacity: 0,
-                scale: 1.1,
+                scale: 1.4,
                 transition: {
                     duration: 1,
                     ease: "easeOut"
                 }
             },
-            className: "fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#fadde0] text-white",
+            className: "fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black text-white",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "relative flex items-center justify-center overflow-hidden",
@@ -118,37 +118,15 @@ function Preloader() {
                             delay: 0.1
                         },
                         className: "relative flex items-baseline text-6xl md:text-8xl lg:text-9xl font-bold uppercase tracking-tighter",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "font-brier ml-1",
-                                children: "Coqueli Flower"
-                            }, void 0, false, {
-                                fileName: "[project]/frontend/components/preloader.tsx",
-                                lineNumber: 42,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$framer$2d$motion$40$11$2e$18$2e$2_$40$emot_73a4dec5f14e9c586ae4b6f53ad50a6d$2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].span, {
-                                initial: {
-                                    opacity: 0,
-                                    scale: 0
-                                },
-                                animate: {
-                                    opacity: 1,
-                                    scale: 1
-                                },
-                                transition: {
-                                    delay: 0.5,
-                                    type: "spring"
-                                },
-                                className: "absolute -top-4 md:-top-8 left-1/2 font-brier text-2xl md:text-4xl",
-                                children: "n"
-                            }, void 0, false, {
-                                fileName: "[project]/frontend/components/preloader.tsx",
-                                lineNumber: 45,
-                                columnNumber: 15
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$frontend$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$0_$40$babel$2b$core$40$7$2e$2_a547a4d4424eca53e00277a8af4f4f00$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                            className: "text-lorenzo-text-light font-brier ml-1",
+                            children: "Coqueli Flower"
+                        }, void 0, false, {
+                            fileName: "[project]/frontend/components/preloader.tsx",
+                            lineNumber: 39,
+                            columnNumber: 15
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/frontend/components/preloader.tsx",
                         lineNumber: 33,
                         columnNumber: 13
@@ -165,14 +143,22 @@ function Preloader() {
                     animate: {
                         opacity: 1
                     },
+                    exit: {
+                        pacity: 0,
+                        y: -20,
+                        transition: {
+                            duration: 1,
+                            delay: 1
+                        }
+                    },
                     transition: {
                         delay: 0.6
                     },
                     className: "absolute bottom-12 font-[family-name:var(--font-oswald)] text-sm md:text-base font-bold tracking-widest uppercase",
-                    children: "LOAD NORRIS"
+                    children: "FLORIST ACADEMY"
                 }, void 0, false, {
                     fileName: "[project]/frontend/components/preloader.tsx",
-                    lineNumber: 56,
+                    lineNumber: 45,
                     columnNumber: 11
                 }, this)
             ]

@@ -6,63 +6,63 @@ import { motion, useScroll, useTransform } from "framer-motion"
 
 const galleryImages = [
   {
-    src: "/images/lorenzo-piloto1.png",
-    alt: "Lorenzo racing action 1",
+    src: "/images/coqueli-po1.jpg",
+    alt: "flower",
     aspect: "aspect-[3/4]",
   },
   {
-    src: "/images/lorenzo-piloto2.png",
-    alt: "Lorenzo racing action 2",
+    src: "/images/coqueli-po2.jpg",
+    alt: "flower",
     aspect: "aspect-[4/3]",
   },
   {
-    src: "/images/lofan/lofan.jpg",
-    alt: "Lorenzo racing action 3",
+    src: "/images/coqueli-po3.jpg",
+    alt: "flower",
     aspect: "aspect-[3/4]",
   },
   {
-    src: "/images/lofan/lofan3.jpg",
-    alt: "Lorenzo racing action 4",
+    src: "/images/coqueli-po4.jpg",
+    alt: "flower",
     aspect: "aspect-[4/3]",
   },
   {
-    src: "/images/lorenzo-piloto7.png",
-    alt: "Lorenzo racing action 5",
+    src: "/images/coqueli-po5.jpg",
+    alt: "flower",
     aspect: "aspect-[3/4]",
   },
   {
-    src: "/images/lorenzo-piloto5.png",
-    alt: "Lorenzo racing action 6",
+    src: "/images/coqueli-po6.jpg",
+    alt: "flower",
     aspect: "aspect-[4/3]",
   },
   {
-    src: "/images/lorenzo-podio2.png",
-    alt: "Lorenzo podium 1",
+    src: "/images/coqueli-po7.jpg",
+    alt: "flower",
     aspect: "aspect-[3/4]",
   },
   {
-    src: "/images/lorenzo-podio3.png",
-    alt: "Lorenzo podium 2",
+    src: "/images/coqueli-po8.jpg",
+    alt: "flower",
     aspect: "aspect-[4/3]",
   },
   {
-    src: "/images/lorenzo-podio5.png",
-    alt: "Lorenzo podium 3",
+    src: "/images/coqueli-po9.jpg",
+    alt: "flower",
     aspect: "aspect-[3/4]",
   },
   {
-    src: "/images/lorenzo-box.png",
-    alt: "Motocross bike",
+    src: "/images/coqueli-po10.jpg",
+    alt: "flower",
     aspect: "aspect-[4/3]",
   },
   {
-    src: "/images/lorenzo-box3.png",
-    alt: "Showroom 1",
+    src: "/images/coqueli-po11.jpg",
+    alt: "flower",
     aspect: "aspect-[3/4]",
   },
   {
-    src: "/images/lorenzo-box2.png",
-    alt: "Showroom 2",
+    src: "/images/coqueli-po12.jpg",
+    alt: "flower",
     aspect: "aspect-[4/3]",
   },
 ]
@@ -76,7 +76,7 @@ export default function MasonryGallerySection() {
   })
 
   // Background transition: Dark Green -> Dark Green -> White
-  const backgroundColor = useTransform(scrollYProgress, [0, 0.6, 0.9], ["#282c20", "#ccc", "#ffffff"])
+  const backgroundColor = useTransform(scrollYProgress, [0, 0.6, 0.9], ["#0000006e", "#a88888", "#ffb5b9"])
 
   // Y Movement: Move grid up to reveal all images
   // Starts at 0vh and moves up to -150vh to show bottom images

@@ -30,7 +30,7 @@ function LoadingFallback() {
   return (
     <mesh>
       <sphereGeometry args={[1.5, 16, 16]} />
-      <meshStandardMaterial color="#1a1f1a" wireframe />
+      <meshStandardMaterial color="#500808" wireframe />
     </mesh>
   )
 }
@@ -42,7 +42,7 @@ useEffect(() => {
   setMounted(true)
 }, []) 
   return (
-    <footer className="bg-lorenzo-accent pt-0 px-4 md:px-8 min-h-screen flex flex-col justify-end relative pb-5">
+    <footer className="bg-lorenzo-light pt-0 px-4 md:px-8 min-h-screen flex flex-col justify-end relative pb-5">
       <div className="absolute top-0 left-0 right-0 h-72 bg-gradient-to-b from-[#f5f1e8] to-lorenzo-accent z-0" />
 
       {/* Main Dark Card Container */}
@@ -80,7 +80,7 @@ useEffect(() => {
             <div className="md:col-span-3 text-center order-2 md:order-1 md:pl-8 flex flex-col justify-center h-full">
               <h4 className="font-black text-xs uppercase mb-6 text-lorenzo-text-light/40 tracking-[0.2em]">PAGES</h4>
               <ul className="space-y-2">
-                {["HOME", "ON TRACK", "OFF TRACK", "CALENDAR"].map((item) => (
+                {["HOME", "커리큘럼", "수강안내", "GALLARY"].map((item) => (
                   <li className="leading-5" key={item}>
                     <a
                       href={`#${item.toLowerCase().replace(" ", "-")}`}
@@ -111,25 +111,25 @@ useEffect(() => {
                   transition={{ duration: 0.8 }}
                   className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9] text-lorenzo-text-light mix-blend-overlay opacity-90"
                 >
-                  <span className="font-sans block">ALWAYS 
-                  <span className="font-brier text-lorenzo-accent"> BRINGING</span>
+                  <span className="font-sans block">
+                  <span className="font-brier text-lorenzo-light"> COQUELI</span>
                   </span>
                   <span className="font-sans block">
-                    THE <span className="font-brier text-lorenzo-accent">FIGHT.</span>
+                    FLOWER SCOOL <span className="font-brier text-lorenzo-light"></span>
                   </span>
                 </motion.h2>
               </div>
 
               {/* 3D 꽃  */}
-              <div className="relative w-full h-[300px] md:h-[500px] z-10 mt-24 md:mt-24">
+              <div className="relative w-full h-[500px] md:h-[500px] z-10 mt-24 md:mt-24">
                 {mounted && (
                 <Canvas>
-                  <PerspectiveCamera makeDefault position={[0, 0, 6.5]} />
+                  <PerspectiveCamera makeDefault position={[0, 0, 5.5]} />
                   <ambientLight intensity={0.8} />
                   <directionalLight position={[10, 10, 5]} intensity={1.5} />
-                  <pointLight position={[-10, -10, -5]} intensity={0.8} color="#CFFF04" />
+                  <pointLight position={[-10, -10, -5]} intensity={0.8} color="#ffffff" />
                   <Suspense fallback={<LoadingFallback />}>
-                    <Helmet3DModel modelPath="/3d/helmet-lorenzo.glb" />
+                    <Helmet3DModel modelPath="/3d/floral-3d.glb" />
                   </Suspense>
                   <Environment preset="city" />
                 </Canvas>
@@ -144,7 +144,7 @@ useEffect(() => {
                 whileTap={{ scale: 0.95 }}
                 className="absolute -bottom-12 z-20 bg-lorenzo-accent text-lorenzo-dark font-black uppercase px-8 py-4 rounded-[14px] text-sm tracking-wider hover:bg-white transition-colors flex items-center gap-2"
               >
-                BUSINESS ENQUIRIES
+                FLower SHOP
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M7 17L17 7M17 7H7M17 7V17" />
                 </svg>
@@ -174,7 +174,7 @@ useEffect(() => {
           {/* Partners Row */}
           {/* Added mb-8 to ensure logos don't touch the bottom edge of the mask */}
           <div className="border-lorenzo-text-light/10 border-t-0 mb-0 mt-32 pt-0">
-            <InfiniteLogoSlider />
+            {/* <InfiniteLogoSlider /> */}
           </div>
         </div>
       </div>

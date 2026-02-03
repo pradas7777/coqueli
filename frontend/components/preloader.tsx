@@ -12,7 +12,7 @@ export default function Preloader() {
     const timer = setTimeout(() => {
       setIsVisible(false)
       document.body.style.overflow = "unset"
-    }, 2500)
+    }, 1700)
 
     return () => {
       clearTimeout(timer)
@@ -25,9 +25,9 @@ export default function Preloader() {
       {isVisible && (
         <motion.div
           initial={{ y: 0 }}
-          exit={{ opacity: 0, scale: 1.1, transition: { duration: 1, ease: "easeOut" } 
+          exit={{ opacity: 0, scale: 1.4, transition: { duration: 1, ease: "easeOut" } 
 }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#fadde0] text-white"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black text-white"
         >
           <div className="relative flex items-center justify-center overflow-hidden">
             <motion.div
@@ -36,30 +36,20 @@ export default function Preloader() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="relative flex items-baseline text-6xl md:text-8xl lg:text-9xl font-bold uppercase tracking-tighter"
             >
-            {/*
-              <span className="font-[family-name:var(--font-oswald)]">AD</span>
-            */}
-              <span className="font-brier ml-1">Coqueli Flower</span>
+              <span className="text-lorenzo-text-light font-brier ml-1">Coqueli Flower</span>
 
-              {/* Stylized 'n' above */}
-              <motion.span
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, type: "spring" }}
-                className="absolute -top-4 md:-top-8 left-1/2 font-brier text-2xl md:text-4xl"
-              >
-                n
-              </motion.span>
+                   
             </motion.div>
           </div>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            exit={{ pacity: 0, y: -20, transition: { duration: 1, delay: 1 }}}
             transition={{ delay: 0.6 }}
             className="absolute bottom-12 font-[family-name:var(--font-oswald)] text-sm md:text-base font-bold tracking-widest uppercase"
           >
-            LOAD NORRIS
+            FLORIST ACADEMY
           </motion.div>
         </motion.div>
       )}
